@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PokéMap Project</title>
+  <style>
+    /* Basic styling for page */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto; /* 10% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    /* The Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .data-source {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>PokéMap Project</h1>
+  
+  <h2>1. Introduction</h2>
+  <p>
+    Welcome to the <strong>PokéMap Project</strong>! This initiative maps Pokémon of specific types—fire, water, and ice—based on real-world environmental data. By integrating Pokémon characteristics with geographic and weather data, we create an immersive visualization of where Pokémon would most likely reside in the real world.
+  </p>
+  
+  <h3>Purpose of the Project</h3>
+  <ul>
+    <li>Combine Pokémon traits and environmental data to simulate realistic Pokémon habitats.</li>
+    <li>Provide a fun and data-driven visualization tool for Pokémon fans and researchers.</li>
+  </ul>
+  
+  <h3>Data Sources Used</h3>
+  <p>Click on each source below to learn more:</p>
+  
+  <div class="data-source">
+    <strong>PokeAPI</strong>
+    <button onclick="openModal('modal-pokeapi')">Learn More</button>
+  </div>
+  
+  <div class="data-source">
+    <strong>Open-Meteo API</strong>
+    <button onclick="openModal('modal-openmeteo')">Learn More</button>
+  </div>
+  
+  <div class="data-source">
+    <strong>Google Earth Engine Dataset</strong>
+    <button onclick="openModal('modal-googleearth')">Learn More</button>
+  </div>
+  
+  <hr>
+  
+  <h2>2. Our Process</h2>
+  
+  <h3>Pokémon Data Analysis</h3>
+  <ol>
+    <li>
+      <strong>Ranking Pokémon</strong>: Pokémon were ranked on a scale of 1-100 based on their affinity for heat, cold, or wet conditions.
+      <ul>
+        <li>Fire Pokémon (e.g., Charizard) ranked high for heat.</li>
+        <li>Ice Pokémon (e.g., Articuno) ranked high for cold.</li>
+        <li>Water Pokémon (e.g., Blastoise) ranked high for wet conditions.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Matching Pokémon to Locations</strong>:  
+      <ul>
+        <li>Fire Pokémon matched with the top 100 hottest places globally.</li>
+        <li>Ice Pokémon matched with the top 100 coldest places.</li>
+        <li>Water Pokémon matched with the top 100 wettest places.</li>
+      </ul>
+    </li>
+  </ol>
+  
+  <h3>Biome Data Analysis</h3>
+  <ol>
+    <li><strong>Data Extraction</strong>: Biome classifications were extracted from the Google Earth Engine dataset.</li>
+    <li><strong>Location Refinement</strong>: Biome data helped filter unsuitable matches for Pokémon based on environmental characteristics (e.g., no fire Pokémon in aquatic biomes).</li>
+  </ol>
+  
+  <h3>Weather Data Analysis</h3>
+  <ol>
+    <li><strong>Using the Open-Meteo API</strong>: Retrieved historical and forecasted weather data for the hottest, coldest, and wettest regions.</li>
+    <li><strong>Processing and Matching</strong>: Identified regions with extreme weather conditions and matched them with Pokémon rankings.</li>
+  </ol>
+  
+  <h3>Integration of All Data</h3>
+  <ol>
+    <li>
+      <strong>Data Combination</strong>: Integrated Pokémon, biome, and weather data using Python scripts.
+    </li>
+    <li>
+      <strong>Mapping with Folium</strong>: Plotted interactive maps showing the top 100 locations for each Pokémon type.
+    </li>
+  </ol>
+  
+  <hr>
+  
+  <h2>3. Final Findings</h2>
+  <h3>Map Representation</h3>
+  <p>
+    An interactive map created with Folium displays:
+    <ul>
+      <li>Markers for the top 100 locations for fire, water, and ice Pokémon.</li>
+      <li>Layers showing biome classifications and weather trends.</li>
+    </ul>
+  </p>
+  
+  <h3>Conclusion</h3>
+  <p>
+    The PokéMap project demonstrates how multiple datasets can be integrated to simulate realistic Pokémon habitats. It serves as both a fun tool for fans and an innovative application of data science.
+  </p>
+  
+  <!-- Modal for PokeAPI -->
+  <div id="modal-pokeapi" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal-pokeapi')">&times;</span>
+      <h3>PokeAPI</h3>
+      <p>
+        PokeAPI provides detailed information about Pokémon, including types, stats, and descriptions. This data was used to determine Pokémon affinities for specific environmental conditions.
+      </p>
+    </div>
+  </div>
+  
+  <!-- Modal for Open-Meteo API -->
+  <div id="modal-openmeteo" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal-openmeteo')">&times;</span>
+      <h3>Open-Meteo API</h3>
+      <p>
+        The Open-Meteo API was used to retrieve historical and forecasted weather data. It helped identify the hottest, coldest, and wettest places around the globe.
+      </p>
+    </div>
+  </div>
+  
+  <!-- Modal for Google Earth Engine Dataset -->
+  <div id="modal-googleearth" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal-googleearth')">&times;</span>
+      <h3>Google Earth Engine Dataset</h3>
+      <p>
+        Google Earth Engine's dataset offers global biome data, including vegetation, terrain, and habitat classifications. This information was used to refine and confirm the optimal habitats for Pokémon.
+      </p>
+    </div>
+  </div>
+  
+  <script>
+    // Function to open modal
+    function openModal(id) {
+      document.getElementById(id).style.display = "block";
+    }
+    // Function to close modal
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+    // Close modal when user clicks anywhere outside the modal content
+    window.onclick = function(event) {
+      var modals = document.getElementsByClassName("modal");
+      for (var i = 0; i < modals.length; i++) {
+        if (event.target == modals[i]) {
+          modals[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+  
+</body>
+</html>
